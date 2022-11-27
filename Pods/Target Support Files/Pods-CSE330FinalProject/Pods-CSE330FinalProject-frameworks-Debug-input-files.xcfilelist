@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/Pods-CSE330FinalProject/Pods-CSE330FinalProject-frameworks.sh
+${BUILT_PRODUCTS_DIR}/HTMLKit/HTMLKit.framework
+${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework

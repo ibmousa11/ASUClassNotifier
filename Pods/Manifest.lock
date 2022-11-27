@@ -1,0 +1,20 @@
+PODS:
+  - HTMLKit (4.2.0)
+  - SwiftSoup (2.4.3)
+
+DEPENDENCIES:
+  - HTMLKit
+  - SwiftSoup
+
+SPEC REPOS:
+  trunk:
+    - HTMLKit
+    - SwiftSoup
+
+SPEC CHECKSUMS:
+  HTMLKit: e11ec9ed1a9be779e7dd65acdea5757fb113030e
+  SwiftSoup: 3384f2e618cfc1b3cbc7852c16692fe8de13fb8f
+
+PODFILE CHECKSUM: db814f55877017b968077c2d3cbc480f324a7e61
+
+COCOAPODS: 1.11.3
