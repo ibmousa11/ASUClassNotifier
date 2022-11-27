@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -43,7 +43,6 @@
 				ECFD4C5C1B1BFC144EABA199 /* Pods-CSE330FinalProject.debug.xcconfig */,
 				AC7FE8BD44BB35A325D6F71B /* Pods-CSE330FinalProject.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -130,7 +129,7 @@
 				};
 			};
 			buildConfigurationList = 9A873F05291DA8C000FF4679 /* Build configuration list for PBXProject "CSE330FinalProject" */;
-			compatibilityVersion = "Xcode 13.0";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
