@@ -44,7 +44,7 @@ func searchClass (webView: WKWebView, classNo: String, completion: @escaping (St
 {
     var temp = ""
     print(classNo)
-    let urlString = "https://catalog.apps.asu.edu/catalog/classes/classlist?campusOrOnlineSelection=C&honors=F&keywords=\(classNo)&promod=F&searchType=open&term=2231"
+    let urlString = "https://catalog.apps.asu.edu/catalog/classes/classlist?campusOrOnlineSelection=C&honors=F&keywords=\(classNo)&promod=F&searchType=all&term=2231"
     let url = URL(string: urlString)
     print(urlString)
     webView.load(URLRequest(url: url!))
