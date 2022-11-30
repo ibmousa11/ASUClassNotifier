@@ -15,12 +15,12 @@ import WebKit
 
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-      FirebaseApp.configure()
-
-    return true
-  }
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        
+        return true
+    }
 }
 
 @main
@@ -53,16 +53,15 @@ func scheduleAppRefresh(){
 func isSeatOpen() async -> Bool {
     
     var tempClassNumber = 13052
+    var seats = "0"
     
-    var seats = getClassSeats(classNo: 13052){(temp) in
+    getClassSeats(classNo: 13052){(temp) in
         print(temp)
         
-        if temp != "0" {
-            return true
-        }
         
     }
     
+    //TODO figure out how to deal with returning a bool
     return false
 }
 
