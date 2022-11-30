@@ -15,7 +15,7 @@ import Firebase
 
 struct ContentView: View {
     @State var webView = WKWebView()
-    @State var classList: [String] = ["first"]
+    @State var classList: [String]
     @State private var classNo: String = ""
     @State var seatsOpen: String = "NA"
     @State private var showAlert = false
@@ -28,11 +28,10 @@ struct ContentView: View {
             Button(action: {
                 addClass(webView: webView, classNo: classNo, classList: classList) {(temp, classList) in
                     self.seatsOpen = temp
-                    var example = ["hello", "mmy", "name"]
                     if Int(temp) == 0 && !self.classList.contains(classNo){
                         self.classList.append(classNo)  //adding the class to the watchlist array if there are zero seats available and does not already exist in the array
-                        self.database.child("TheWatchlist").setValue(classNo)       //updating the array in firebase
-                        self.database.child("Example").setValue(example)
+                        self.database.child("TheWatchlist").setValue(self.classList)       //updating the array in firebase
+                        print("Class List is: \(classList)")
                     }
                     else if Int(temp)! > 0
                     {
@@ -49,20 +48,20 @@ struct ContentView: View {
                 print("There are " + self.seatsOpen + " seats open")
             }) {
                 Text("Add to Watchlist")
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(Color.white)
-                            .cornerRadius(20)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(Color.white)
+                    .cornerRadius(20)
             }.alert("Class Already Has Open Seats", isPresented: $showAlert) {}.alert("Class Has Already Been Added To Watchlist", isPresented: $showAlreadyAddedAlert) {}
             
         }
     }
     
-    struct ContentView_Previews: PreviewProvider {
-        static var previews: some View {
-            ContentView()
-        }
-    }
+//    struct ContentView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            ContentView()
+//        }
+//    }
     
     func addClass (webView: WKWebView, classNo: String, classList: [String], completion: @escaping (String, [String]) -> Void)
     {
