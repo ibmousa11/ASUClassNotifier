@@ -31,8 +31,8 @@ struct ContentView: View {
                     var example = ["hello", "mmy", "name"]
                     if Int(temp) == 0 && !self.classList.contains(classNo){
                         self.classList.append(classNo)  //adding the class to the watchlist array if there are zero seats available and does not already exist in the array
-                        self.database.child("TheWatchlist").setValue(classNo)       //updating the array in firebase
-                        self.database.child("Example").setValue(example)
+                        //self.database.child("TheWatchlist").setValue(classNo)       //updating the array in firebase
+                        //self.database.child("Example").setValue(example)
                     }
                     else if Int(temp)! > 0
                     {
