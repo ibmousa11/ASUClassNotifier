@@ -30,7 +30,7 @@ struct CSE330FinalProjectApp: App {
         FirebaseApp.configure()
 //        var database = Database.database().reference()
         
-        
+        //comment
 //        database.child("TheWatchlist").getData { (error, snapshot) in
 //            for childSnapshot in snapshot!.children.allObjects as! [DataSnapshot] {
 ////                print(childSnapshot.key) // prints the key of each user
