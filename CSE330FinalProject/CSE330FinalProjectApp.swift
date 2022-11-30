@@ -70,38 +70,34 @@ func notifyClassAvailability() async -> Void{
 }
 
 
-func getClassSeats(classNo: Int, completion: @escaping (String) -> Void){
-    @State var webView = WKWebView()
+func getClassSeats(classNo: Int) async -> String{
+    var webView = await WKWebView()
     var temp = ""
     print(classNo)
     let urlString = "https://catalog.apps.asu.edu/catalog/classes/classlist?campusOrOnlineSelection=C&honors=F&keywords=\(classNo)&promod=F&searchType=all&term=2231"
     let url = URL(string: urlString)
     print(urlString)
-    webView.load(URLRequest(url: url!))
+    await webView.load(URLRequest(url: url!))
     
-    
-    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-        webView.evaluateJavaScript("document.documentElement.outerHTML.toString()",
-                                   completionHandler: { (html: Any?, error: Error?) in
+    await (html, error) = webView.evaluateJavaScript("document.documentElement.outerHTML.toString()")
+        
+        var s = String(describing: html)
+        let doc: Document = try! SwiftSoup.parse(s)
+        do {
+            var classArray = try doc.getElementsByClass("text-nowrap").array()
             
-            var s = String(describing: html)
-            let doc: Document = try! SwiftSoup.parse(s)
-            do {
-                var classArray = try doc.getElementsByClass("text-nowrap").array()
-                
-                for element in classArray {
-                    if(try element.text().contains("of"))
-                    {
-                        var token = try element.text().components(separatedBy: " ")
-                        print(token[0])
-                        temp = token[0]                    }
-                }
-                print("Temp is " + temp)
-                completion(temp)
-                
+            for element in classArray {
+                if(try element.text().contains("of"))
+                {
+                    var token = try element.text().components(separatedBy: " ")
+                    print(token[0])
+                    temp = token[0]                    }
             }
+            print("Temp is " + temp)
+            return temp
             
-            catch {}
-        })
-    }
+        }
+        
+        catch {}
+    
 }
