@@ -23,28 +23,27 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct CSE330FinalProjectApp: App {
     
-    var tempClassList: [String] = []
+//    var tempClassList: [String] = []
     
     init() {
-        var classList2: [String] = []
+//        var classList2: [String] = []
         FirebaseApp.configure()
-        var database = Database.database().reference()
+//        var database = Database.database().reference()
         
         
-        database.child("TheWatchlist").getData { (error, snapshot) in
-            for childSnapshot in snapshot!.children.allObjects as! [DataSnapshot] {
-                print(childSnapshot.key) // prints the key of each user
-                print(childSnapshot.value!) // prints the userName property
-                classList2.append(childSnapshot.value as! String)
-            }
-        }
-        self.tempClassList = classList2
+//        database.child("TheWatchlist").getData { (error, snapshot) in
+//            for childSnapshot in snapshot!.children.allObjects as! [DataSnapshot] {
+////                print(childSnapshot.key) // prints the key of each user
+////                print(childSnapshot.value!) // prints the userName property
+//                classList2.append(childSnapshot.value as! String)
+//            }
+//        }
+//        self.tempClassList = classList2
     }
     
     var body: some Scene {
         WindowGroup {
-            
-            ContentView(classList: tempClassList)
+            ContentView()
         }
     }
 }

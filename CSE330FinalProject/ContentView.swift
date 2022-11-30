@@ -15,11 +15,22 @@ import Firebase
 
 struct ContentView: View {
     @State var webView = WKWebView()
-    @State var classList: [String]
+    @State var classList: [String] = []
     @State private var classNo: String = ""
     @State var seatsOpen: String = "NA"
     @State private var showAlert = false
     @State private var showAlreadyAddedAlert = false
+    
+    
+//    init(webView: WKWebView = WKWebView(), classList: [String], classNo: String, seatsOpen: String, showAlert: Bool = false, showAlreadyAddedAlert: Bool = false) {
+//        self.webView = webView
+//        self.classList = classList
+//        self.classNo = classNo
+//        self.seatsOpen = seatsOpen
+//        self.showAlert = showAlert
+//        self.showAlreadyAddedAlert = showAlreadyAddedAlert
+//        loadInFromFirebase()
+//    }
     var database = Database.database().reference()
     var body: some View {
         VStack{
@@ -31,7 +42,7 @@ struct ContentView: View {
                     if Int(temp) == 0 && !self.classList.contains(classNo){
                         self.classList.append(classNo)  //adding the class to the watchlist array if there are zero seats available and does not already exist in the array
                         self.database.child("TheWatchlist").setValue(self.classList)       //updating the array in firebase
-                        print("Class List is: \(classList)")
+                        print("Class List is: \(self.classList)")
                     }
                     else if Int(temp)! > 0
                     {
@@ -42,7 +53,7 @@ struct ContentView: View {
                         showAlreadyAddedAlert = true    //shows alert if class has already been added to the watchlist array
                     }
                     
-                    print(self.classList)
+                    print("Hello \(self.classList)")
                 }
                 self.seatsOpen = "Loading..."
                 print("There are " + self.seatsOpen + " seats open")
@@ -54,7 +65,7 @@ struct ContentView: View {
                     .cornerRadius(20)
             }.alert("Class Already Has Open Seats", isPresented: $showAlert) {}.alert("Class Has Already Been Added To Watchlist", isPresented: $showAlreadyAddedAlert) {}
             
-        }
+        }.onLoad{loadInFromFirebase()}
     }
     
 //    struct ContentView_Previews: PreviewProvider {
@@ -99,4 +110,47 @@ struct ContentView: View {
             })
         }
     }
+    
+    func loadInFromFirebase(){
+        
+        database.child("TheWatchlist").getData { (error, snapshot) in
+            for childSnapshot in snapshot!.children.allObjects as! [DataSnapshot] {
+//                print(childSnapshot.key) // prints the key of each user
+//                print(childSnapshot.value!) // prints the userName property
+                self.classList.append(childSnapshot.value as! String)
+            }
+        }
+        
+        sleep(5)
+        
+        print("List in Loadin is: \(self.classList)")
+    }
+}
+
+extension View {
+
+    func onLoad(perform action: (() -> Void)? = nil) -> some View {
+        modifier(ViewDidLoadModifier(perform: action))
+    }
+
+}
+
+struct ViewDidLoadModifier: ViewModifier {
+
+    @State private var didLoad = false
+    private let action: (() -> Void)?
+
+    init(perform action: (() -> Void)? = nil) {
+        self.action = action
+    }
+
+    func body(content: Content) -> some View {
+        content.onAppear {
+            if didLoad == false {
+                didLoad = true
+                action?()
+            }
+        }
+    }
+
 }
