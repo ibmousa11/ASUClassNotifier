@@ -8,5 +8,7 @@ target 'CSE330FinalProject' do
   # Pods for CSE330FinalProject
   pod 'SwiftSoup'
   pod 'HTMLKit'
+  pod 'Firebase/Core'
+  pod 'Firebase/Database'
 
 end
