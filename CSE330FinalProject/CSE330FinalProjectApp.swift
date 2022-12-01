@@ -26,11 +26,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct CSE330FinalProjectApp: App {
     
+    let notify = NotificationHandler()
+    
 //    var tempClassList: [String] = []
     
     init() {
 //        var classList2: [String] = []
         FirebaseApp.configure()
+        notify.askPermission()
 //        var database = Database.database().reference()
         
         //comment
@@ -44,32 +47,42 @@ struct CSE330FinalProjectApp: App {
 //        self.tempClassList = classList2
     }
     
+    @Environment(\.scenePhase) private var phase
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-        }
-        .backgroundTask(.appRefresh("ClassChecker")){
-            scheduleAppRefresh()
-            //TODO isSeatOpen & notifyClassAvailibility()
-            if await isSeatOpen(){
-                //await notifyClassAvailability()
-                //print("notification sent")
+        }.onChange(of: phase) { newPhase in
+            switch newPhase {
+            case .background: scheduleAppRefresh()
+            default: break
             }
         }
-    }
+        
+        
+        .backgroundTask(.appRefresh("ClassChecker")){
+            
+            //TODO isSeatOpen & notifyClassAvailibility()
+            isSeatOpen()
+                
+
+            }
+        }
+    
 }
 
 func scheduleAppRefresh(){
 
     let request = BGAppRefreshTaskRequest(identifier: "ClassChecker")
+    request.earliestBeginDate = .now.addingTimeInterval(24 * 3600)
+    try? BGTaskScheduler.shared.submit(request)
 
 }
 
 
-func isSeatOpen() async -> Bool {
-
-    var tempClassNumber = 13052
-    var seats = "0"
+func isSeatOpen() {
+    
+    print("isSeatOpen() called")
     
     var arr = UserDefaults.standard.array(forKey: "classList")as! [String]
     
@@ -78,14 +91,11 @@ func isSeatOpen() async -> Bool {
     DispatchQueue.main.asyncAfter(deadline: .now() + Double(arr.count)*6.0) {
         if(x.checkArray.count>0){
             
-            //SEND NOTIFICATION HERE OR CALL IT
-            
+//            notify.sendNotification(number: x.checkArray[0])
+            CSE330FinalProjectApp().notify.sendNotification(number: x.checkArray[0])
+
         }
     }
-    
-    
-    //TODO figure out how to deal with returning a bool
-    return false
 }
 /*
 func notifyClassAvailability() async -> Void{

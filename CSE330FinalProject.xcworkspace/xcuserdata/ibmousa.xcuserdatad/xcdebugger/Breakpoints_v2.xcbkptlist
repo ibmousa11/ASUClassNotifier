@@ -14,10 +14,58 @@
             filePath = "CSE330FinalProject/CSE330FinalProjectApp.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
             landmarkName = "CSE330FinalProjectApp"
             landmarkType = "14">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1D76F7F1-1040-4EDE-A958-25397003C2EC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CSE330FinalProject/CSE330FinalProjectApp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "1D76F7F1-1040-4EDE-A958-25397003C2EC - b6044aec537b7a36"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CSE330FinalProject.CSE330FinalProjectApp.body.getter : some"
+                  moduleName = "CSE330FinalProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ibmousa/Desktop/CSE335FinalProject/CSE330FinalProject/CSE330FinalProjectApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "904">
+               </Location>
+               <Location
+                  uuid = "1D76F7F1-1040-4EDE-A958-25397003C2EC - 810af09d2c0fca8d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 @Sendable () async -&gt; () in CSE330FinalProject.CSE330FinalProjectApp.body.getter : some"
+                  moduleName = "CSE330FinalProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ibmousa/Desktop/CSE335FinalProject/CSE330FinalProject/CSE330FinalProjectApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "0">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -20,7 +20,10 @@ struct ContentView: View {
     @State var seatsOpen: String = "NA"
     @State private var showAlert = false
     @State private var showAlreadyAddedAlert = false
+    @State private var showSeatAvailableAlert = false
+    @State private var showNoSeatAvailableAlert = false
     @State var checkArray: [String] = []           //array that has the classes that changed status
+    @State private var alertItem: AlertItem?
     
     
     
@@ -50,7 +53,7 @@ struct ContentView: View {
             Button(action: {
                 addClass(webView: webView, classNo: classNo, classList: classList) {(temp, classList) in
                     self.seatsOpen = temp
-                    if /*Int(temp) == 0 &&*/ !self.classList.contains(classNo){
+                    if Int(temp) == 0 && !self.classList.contains(classNo){
                         self.classList.append(classNo)  //adding the class to the watchlist array if there are zero seats available and does not already exist in the array
                         
                         
@@ -58,13 +61,16 @@ struct ContentView: View {
                         print("Class List is: \(self.classList)")
                         self.classNo = ""
                     }
-                    //                    else if Int(temp)! > 0
-                    //                    {
-                    //                        showAlert = true;       //shows alert if there open seats in the class
-                    //                    }
+                    else if Int(temp)! > 0
+                    {
+                        showAlert = true;       //shows alert if there open seats in the class
+                        self.alertItem = AlertItem(title: Text("Class \(self.classNo) Already Has Open Seats"))
+                        
+                    }
                     else if self.classList.contains(classNo)
                     {
                         showAlreadyAddedAlert = true    //shows alert if class has already been added to the watchlist array
+                        self.alertItem = AlertItem(title: Text("Class \(self.classNo) Has Already Been Added To Watchlist"))
                     }
                     
                     print("Hello \(self.classList)")
@@ -78,9 +84,23 @@ struct ContentView: View {
                     .background(Color.blue)
                     .foregroundColor(Color.white)
                     .cornerRadius(20)
-            }.alert("Class \(self.classNo) Already Has Open Seats", isPresented: $showAlert) {}.alert("Class \(self.classNo) Has Already Been Added To Watchlist", isPresented: $showAlreadyAddedAlert) {}
+            }.alert(item: $alertItem) { alertItem in
+                Alert(title: self.alertItem!.title)
+            }
             Button(action: {
                 checkClassArray(theList: self.classList)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 25.0) {
+                    if checkArray != [] {
+                        //                        showSeatAvailableAlert = true
+                        self.alertItem = AlertItem(title: Text("Class \(self.checkArray[0]) now has a seat available"))
+                    }
+                    else if checkArray == [] {
+                        //                        showNoSeatAvailableAlert = true
+                        self.alertItem = AlertItem(title: Text("None of your classes have seats available"))
+                        
+                    }
+                }
+                
             }) {
                 Text("Check Classes")
                     .padding()
@@ -137,13 +157,12 @@ struct ContentView: View {
     func checkClassArray(theList: [String]) {
         var timer: Double = 5
         
-        var x = 0
         theList.forEach { singleClass in
             DispatchQueue.main.asyncAfter(deadline: .now() + timer) {
                 checkClassArrayInner(classNumber: singleClass, webView: self.webView)
                 
             }
-            x+=1
+            timer += 5
         }
         
     }
@@ -156,7 +175,7 @@ struct ContentView: View {
         print(urlString)
         webView.load(URLRequest(url: url!))
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
             
             print("Hello we are here: \(url)")
             var temp = ""
@@ -250,5 +269,12 @@ struct ViewDidLoadModifier: ViewModifier {
         }
     }
     
+}
+
+struct AlertItem: Identifiable {
+    var id = UUID()
+    var title: Text
+    var message: Text?
+    var dismissButton: Alert.Button?
 }
 
