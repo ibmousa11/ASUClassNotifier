@@ -52,6 +52,8 @@ struct ContentView: View {
                     self.seatsOpen = temp
                     if /*Int(temp) == 0 &&*/ !self.classList.contains(classNo){
                         self.classList.append(classNo)  //adding the class to the watchlist array if there are zero seats available and does not already exist in the array
+                        
+                        
                         self.database.child("TheWatchlist").setValue(self.classList)       //updating the array in firebase
                         print("Class List is: \(self.classList)")
                         self.classNo = ""
@@ -135,9 +137,13 @@ struct ContentView: View {
     func checkClassArray(theList: [String]) {
         var timer: Double = 5
         
-        
+        var x = 0
         theList.forEach { singleClass in
-            checkClassArrayInner(classNumber: singleClass, webView: self.webView)
+            DispatchQueue.main.asyncAfter(deadline: .now() + timer) {
+                checkClassArrayInner(classNumber: singleClass, webView: self.webView)
+                
+            }
+            x+=1
         }
         
     }
@@ -150,7 +156,7 @@ struct ContentView: View {
         print(urlString)
         webView.load(URLRequest(url: url!))
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
             
             print("Hello we are here: \(url)")
             var temp = ""
@@ -203,7 +209,12 @@ struct ContentView: View {
                 //                print(childSnapshot.key) // prints the key of each user
                 //                print(childSnapshot.value!) // prints the userName property
                 self.classList.append(childSnapshot.value as! String)
+                
+                
+                
+                
             }
+            UserDefaults.standard.set(self.classList, forKey: "classList")
         }
         
         sleep(5)

@@ -47,17 +47,18 @@ struct CSE330FinalProjectApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-        }/*
+        }
         .backgroundTask(.appRefresh("ClassChecker")){
             scheduleAppRefresh()
             //TODO isSeatOpen & notifyClassAvailibility()
             if await isSeatOpen(){
-                await notifyClassAvailability()
+                //await notifyClassAvailability()
+                //print("notification sent")
             }
-        }*/
+        }
     }
 }
-/*
+
 func scheduleAppRefresh(){
 
     let request = BGAppRefreshTaskRequest(identifier: "ClassChecker")
@@ -69,51 +70,30 @@ func isSeatOpen() async -> Bool {
 
     var tempClassNumber = 13052
     var seats = "0"
-
-    getClassSeats(classNo: 13052){(temp) in
-        print(temp)
-
-
+    
+    var arr = UserDefaults.standard.array(forKey: "classList")as! [String]
+    
+    let x = ContentView()
+    x.checkClassArray(theList: UserDefaults.standard.array(forKey: "classlist")as! [String])
+    DispatchQueue.main.asyncAfter(deadline: .now() + Double(arr.count)*6.0) {
+        if(x.checkArray.count>0){
+            
+            //SEND NOTIFICATION HERE OR CALL IT
+            
+        }
     }
-
+    
+    
     //TODO figure out how to deal with returning a bool
     return false
 }
-
+/*
 func notifyClassAvailability() async -> Void{
-    
-}
-
-
-func getClassSeats(classNo: Int) async -> String{
-    var webView = await WKWebView()
-    var temp = ""
-    print(classNo)
-    let urlString = "https://catalog.apps.asu.edu/catalog/classes/classlist?campusOrOnlineSelection=C&honors=F&keywords=\(classNo)&promod=F&searchType=all&term=2231"
-    let url = URL(string: urlString)
-    print(urlString)
-    await webView.load(URLRequest(url: url!))
-
-    await (html, error) = webView.evaluateJavaScript("document.documentElement.outerHTML.toString()")
-
-        var s = String(describing: html)
-        let doc: Document = try! SwiftSoup.parse(s)
-        do {
-            var classArray = try doc.getElementsByClass("text-nowrap").array()
-
-            for element in classArray {
-                if(try element.text().contains("of"))
-                {
-                    var token = try element.text().components(separatedBy: " ")
-                    print(token[0])
-                    temp = token[0]                    }
-            }
-            print("Temp is " + temp)
-            return temp
-
-        }
-
-        catch {}
-
+    var notify:UNNotificationRequest = nil
+    do{
+        try await UNUserNotificationCenter.current().add(notify)
+    }catch{
+        print("Error w/ notification")
+    }
 }
 */
