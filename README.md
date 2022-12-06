@@ -1,1 +1,1 @@
-This is a class notifier that notifies the user when a class at Arizona State University opens up. 
+This is a class notifier that notifies the user when a class at Arizona State University opens up to aid students into joining classes that are currently full. To run this app, XCode needs to be installed along with CocoaPods. The pod install command also needs to be ran to install the libraries that are used in the application 
